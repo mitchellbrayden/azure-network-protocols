@@ -111,38 +111,166 @@ Observe the Ping Behavior:
 
 Initially, you will see normal ping responses (Reply from <IP>).
 After the rule is applied, the responses will change to Request timed out because ICMP traffic is now blocked.
+To stop it ppress control-C.
 This configuration demonstrates how NSG rules can effectively control and restrict specific traffic, such as ICMP, ensuring tighter security for your VM.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/hBieJBW.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
+Steps to Capture SSH Traffic in Wireshark and Connect to the Ubuntu VM:
+Open Wireshark:
 
+Start Wireshark on your Windows 10 VM.
+Click on the Shark Fin icon (top left) to start capturing packets.
+Filter for SSH Traffic:
+
+In the Filter Bar, type:
+bash
+Copy
+Edit
+ssh
+Press Enter to apply the filter. This will only display SSH-related packets.
+Initiate an SSH Connection to the Ubuntu VM:
+
+Open PowerShell on the Windows 10 VM.
+Type the following command:
+powershell
+Copy
+Edit
+ssh labuser@<Private-IP>
+Replace <Private-IP> with the private IP address of your Ubuntu VM.
+Authenticate the SSH Connection:
+
+When prompted with:
+Are you sure you want to continue connecting (yes/no)?
+Type:
+yes
+and press Enter.
+
+Enter the Ubuntu VM password (it won’t be visible while typing for security reasons).
+
+Press Enter to log in.
+
+Observe SSH Traffic in Wireshark:
+
+Go back to Wireshark and watch the captured packets.
+You should see an increase in SSH packets as the encrypted connection is established and data is transmitted.
+Exit the SSH Session:
+
+In PowerShell, type:
+exit
+Press Enter to close the SSH session.
+Review SSH Traffic in Wireshark:
+
+The traffic should decrease after disconnecting.
+This confirms that SSH packets were being captured and logged in Wireshark.
+This demonstrates how SSH traffic appears in Wireshark and how you can monitor secure remote connections to your Ubuntu VM.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/HA94h5F.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Steps to Capture DHCP Traffic in Wireshark and Use a Batch Script to Release & Renew IP:
+Open Wireshark:
+
+Start Wireshark on your Windows 10 VM.
+Click the Shark Fin icon (top left) to start capturing packets.
+Filter for DHCP Traffic:
+
+In the Wireshark Filter Bar, type:
+dhcp
+Press Enter to apply the filter.
+This will show only DHCP (Dynamic Host Configuration Protocol) packets.
+Create the DHCP Release/Renew Script:
+
+Open Notepad.
+Type the following commands:
+ipconfig /release
+ipconfig /renew
+Click File > Save As.
+Navigate to:
+C:\ProgramData
+Change "Save as type" to "All Files".
+Name the file:
+dhcp.bat
+Click Save and close Notepad.
+Run the Batch Script in PowerShell:
+
+Open PowerShell as Administrator.
+Navigate to C:\ProgramData:
+cd C:\ProgramData
+Execute the script:
+.\dhcp.bat
+Your network connection may briefly disconnect and reconnect as the IP is released and renewed.
+Observe DHCP Traffic in Wireshark:
+
+Look for DHCP Discover, Offer, Request, and Acknowledgment packets.
+These packets show the process of the DHCP server assigning a new IP.
+By following these steps, you successfully triggered and observed DHCP traffic in Wireshark.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/YXRUmh7.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Capturing DNS Traffic in Wireshark Using nslookup:
+Open Wireshark:
+
+Start Wireshark on your Windows 10 VM.
+Click the Shark Fin icon (top left) to start capturing packets.
+Filter for DNS Traffic:
+
+In the Wireshark Filter Bar, type:
+dns
+Press Enter to apply the filter.
+This will show only DNS (Domain Name System) packets.
+Restart Packet Capture:
+
+Click the green shark fin (top left) to restart the capture.
+Use nslookup in PowerShell:
+
+Open PowerShell.
+Run the following commands:
+nslookup google.com
+nslookup disney.com
+This will send DNS queries to resolve the IP addresses of google.com and disney.com.
+Observe DNS Traffic in Wireshark:
+
+Look for DNS Query packets (sent from your machine to the DNS server).
+Look for DNS Response packets (returned from the DNS server with the resolved IP).
+You should see the IP addresses of google.com and disney.com in the responses.
+Now you've successfully captured DNS resolution requests and responses in Wireshark.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/XmaGe0w.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Capturing RDP Traffic in Wireshark:
+Open Wireshark:
+
+Start Wireshark on your Windows 10 VM.
+Click the Shark Fin icon (top left) to start capturing packets.
+Filter for RDP Traffic:
+
+In the Wireshark Filter Bar, type:
+yaml
+Copy
+Edit
+tcp.port == 3389
+Press Enter to apply the filter.
+This will show only Remote Desktop Protocol (RDP) packets.
+Observe Non-Stop Traffic:
+
+Since RDP constantly streams the desktop session from one machine to another, you should see continuous traffic between the client and the server.
+This happens because RDP needs to send screen updates, keyboard inputs, and mouse movements in real-time.
+Now you've successfully captured and analyzed RDP traffic in Wireshark!
 </p>
 <br />
